@@ -22,3 +22,23 @@
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
 replay_pid*
+
+# ==========================================
+# 追加・推奨する設定（Maven ＆ VS Code ＆ OS関連）
+# ==========================================
+
+# Mavenのビルド成果物（コンパイルされたファイルがここに出力されます）
+/target/
+
+# VS Codeのワークスペース固有の設定（デバッグ情報など個人差が出るもの）
+.vscode/
+!.vscode/settings.json
+!.vscode/tasks.json
+!.vscode/launch.json
+
+# OSごとの隠しファイル・一時ファイル
+# Windows
+Thumbs.db
+ehthumbs.db
+Desktop.ini
+$RECYCLE.BIN/
