@@ -28,7 +28,7 @@ replay_pid*
 # ==========================================
 
 # Mavenのビルド成果物（コンパイルされたファイルがここに出力されます）
-/target/
+multi-management-system/target/
 
 # VS Codeのワークスペース固有の設定（デバッグ情報など個人差が出るもの）
 .vscode/
