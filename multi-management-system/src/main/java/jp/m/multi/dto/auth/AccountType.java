@@ -1,12 +1,12 @@
 package jp.m.multi.dto.auth;
 
-public enum AccoutType {
+public enum AccountType {
     STAFF("教職員"),
     STUDENT("生徒");
 
     private final String label;
 
-    AccoutType(String label) {
+    AccountType(String label) {
         this.label = label;
     }
 
