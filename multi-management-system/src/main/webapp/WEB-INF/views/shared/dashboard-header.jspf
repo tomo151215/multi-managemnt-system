@@ -1,0 +1,15 @@
+<c:url var="profileImageUrl" value="${sessionScope.loginUser.profileImagePath}" />
+<img src="<c:out value='${profileImageUrl}' />" width="48" height="48" alt="プロフィール画像">
+<header class="border-b border-base-300 bg-base-100">
+    <div class="navbar mx-auto max-w-6xl gap-4 px-6">
+        <div class="flex-1">
+            <span class="rounded-xl bg-primary p-3 text-sm font-bold text-primary-content">CO</span>
+            <span class="ml-3 text-lg font-bold tracking-tight">Campus One</span>
+        </div>
+        <button type="button" data-theme-toggle class="btn btn-ghost btn-sm" aria-label="配色を切り替える" aria-pressed="false">配色切替</button>
+        <form method="post" action="<c:url value='/app/auth/logout' />">
+            <input type="hidden" name="csrfToken" value="<c:out value='${sessionScope.csrfToken}' />">
+            <button class="btn btn-outline btn-sm" type="submit">ログアウト</button>
+        </form>
+    </div>
+</header>
