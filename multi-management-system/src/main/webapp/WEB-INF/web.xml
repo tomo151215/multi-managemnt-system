@@ -4,6 +4,9 @@
   xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_1.xsd"
   version="6.1">
   <display-name>Multi Management System</display-name>
+  <listener>
+    <listener-class>jp.m.multi.listener.AppInitializer</listener-class>
+  </listener>
   <filter>
     <filter-name>encoding</filter-name>
     <filter-class>jp.m.multi.filter.EncodingFilter</filter-class>
@@ -20,6 +23,15 @@
   <filter-mapping>
     <filter-name>headers</filter-name>
     <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  <filter>
+    <filter-name>authentication</filter-name>
+    <filter-class>jp.m.multi.filter.AuthenticationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>authentication</filter-name>
+    <url-pattern>/app/*</url-pattern>
     <dispatcher>REQUEST</dispatcher>
   </filter-mapping>
   <servlet>

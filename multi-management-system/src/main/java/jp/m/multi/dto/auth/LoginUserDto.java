@@ -6,13 +6,13 @@ public final class LoginUserDto implements Serializable {
     private static final long serialVersionUID = 1L;
 
     private final long accountId;
-    private final int profileId;
+    private final long profileId;
     private final AccountType accountType;
     private final String displayName;
     private final long profileImageId;
     private final String prifileImagePath;
 
-    public LoginUserDto(long accountId, int profileId, AccountType accountType, String displayName, long profileImageId,
+    public LoginUserDto(long accountId, long profileId, AccountType accountType, String displayName, long profileImageId,
             String prifileImagePath) {
         this.accountId = accountId;
         this.profileId = profileId;
@@ -26,7 +26,7 @@ public final class LoginUserDto implements Serializable {
         return accountId;
     }
 
-    public int getProfileId() {
+    public long getProfileId() {
         return profileId;
     }
 
