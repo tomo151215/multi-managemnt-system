@@ -1,16 +1,17 @@
-# Compiled class file
-*.class
+# ==========================================
+# Javaのコンパイル結果・ログ
+# ==========================================
 
-# Log file
+*.class
 *.log
 
-# BlueJ files
+# BlueJ
 *.ctxt
 
-# Mobile Tools for Java (J2ME)
+# Mobile Tools for Java（J2ME）
 .mtj.tmp/
 
-# Package Files #
+# アーカイブ・パッケージ
 *.jar
 *.war
 *.nar
@@ -19,29 +20,49 @@
 *.tar.gz
 *.rar
 
-# virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
+# JVMのクラッシュログ
 hs_err_pid*
 replay_pid*
 
 # ==========================================
-# 追加・推奨する設定（Maven ＆ VS Code ＆ OS関連）
+# Maven
 # ==========================================
 
-# Mavenのビルド成果物（コンパイルされたファイルがここに出力されます）
-multi-management-system/target/
+/multi-management-system/target/
 
-# VS Codeのワークスペース固有の設定（デバッグ情報など個人差が出るもの）
-.vscode/
-!.vscode/settings.json
-!.vscode/tasks.json
-!.vscode/launch.json
+# ==========================================
+# Node.js
+# ==========================================
 
-# OSごとの隠しファイル・一時ファイル
-# Windows
+/multi-management-system/node_modules/
+
+# package.json・package-lock.jsonはGitで管理する
+
+# ==========================================
+# DB接続情報
+# ==========================================
+
+/multi-management-system/config/DB_Connection.properties
+
+# DB_Connection.properties.exampleはGitで管理する
+
+# ==========================================
+# VS Code
+# ==========================================
+
+# フォルダ自体ではなく、中身を除外する
+/.vscode/*
+
+# チームで共有する設定は管理対象に戻す
+!/.vscode/settings.json
+!/.vscode/tasks.json
+!/.vscode/launch.json
+
+# ==========================================
+# Windowsの一時ファイル
+# ==========================================
+
 Thumbs.db
 ehthumbs.db
 Desktop.ini
 $RECYCLE.BIN/
-
-# DB接続情報
-/config/DB_Connection.properties
