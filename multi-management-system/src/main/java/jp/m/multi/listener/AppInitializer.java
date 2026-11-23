@@ -1,5 +1,6 @@
 package jp.m.multi.listener;
 
+import com.mysql.cj.jdbc.AbandonedConnectionCleanupThread;
 import com.zaxxer.hikari.HikariDataSource;
 import jakarta.servlet.SessionCookieConfig;
 import jp.m.multi.config.AppConfig;
@@ -13,6 +14,7 @@ import jp.m.multi.service.auth.AuthService;
 
 public final class AppInitializer implements ServletContextListener {
     private HikariDataSource dataSource;
+
     @Override
     public void contextInitialized(ServletContextEvent event) {
         AppConfig config = AppConfig.load();
@@ -24,11 +26,20 @@ public final class AppInitializer implements ServletContextListener {
         AuthService auth = new AuthService(dataSource, new JdbcAccountDao(), new BcryptPasswordHasher());
         event.getServletContext().setAttribute(AppContext.KEY, new AppContext(auth, config.getSessionTimeout()));
     }
+
     @Override
     public void contextDestroyed(ServletContextEvent event) {
-        if (dataSource != null) {
-            dataSource.close();
+        try {
+            // アプリが管理しているDB接続プールを閉じる
+            if (dataSource != null) {
+                dataSource.close();
+            }
+        } finally {
+            // MySQLドライバーの後処理用スレッドを停止する
+            AbandonedConnectionCleanupThread.checkedShutdown();
+
+            // アプリ全体で共有していた情報を取り除く
+            event.getServletContext().removeAttribute(AppContext.KEY);
         }
-        event.getServletContext().removeAttribute(AppContext.KEY);
     }
 }

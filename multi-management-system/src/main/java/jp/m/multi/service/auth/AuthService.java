@@ -43,11 +43,13 @@ public class AuthService {
         if (account != null) {
             hash = account.getPasswordHash();
         }
+
         boolean matches = hasher.verify(password, hash);
         if (!matches || account == null) {
             return null;
         }
         return account.getStatus().toActiveUser();
+
     }
 
     public LoginUserDto currentUser(long accountId) throws SQLException {

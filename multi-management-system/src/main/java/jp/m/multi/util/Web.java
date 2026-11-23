@@ -79,6 +79,7 @@ public class Web {
 
     public static void databaseError(HttpServletRequest request, HttpServletResponse response,
             SQLException exception) throws ServletException, IOException {
+        exception.printStackTrace();
         String sqlState = exception.getSQLState();
         request.getServletContext().log("Database operation failed; SQLState=" + sqlState);
         if (response.isCommitted()) {

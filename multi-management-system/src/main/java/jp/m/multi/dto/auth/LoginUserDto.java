@@ -42,7 +42,7 @@ public final class LoginUserDto implements Serializable {
         return profileImageId;
     }
 
-    public String getPrifileImagePath() {
+    public String getProfileImagePath() {
         return prifileImagePath;
     }
 

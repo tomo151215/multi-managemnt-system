@@ -97,6 +97,9 @@ public class FrontController extends HttpServlet {
 
             // 5. 各機能の処理を実行
             action.execute(request, response);
+        } catch (ServletException e) {
+            e.printStackTrace();
+            throw e;
         } catch (SQLException e) {
             Web.databaseError(request, response, e);
         } catch (ReflectiveOperationException e) {
@@ -149,6 +152,7 @@ public class FrontController extends HttpServlet {
             Throwable error) throws ServletException, IOException {
         // 例外の詳細や資格情報は画面に表示しない
         getServletContext().log("Request failed: " + error.getClass().getName());
+        error.printStackTrace();
         if (response.isCommitted()) {
             throw new ServletException("Response already committed", error);
         }
