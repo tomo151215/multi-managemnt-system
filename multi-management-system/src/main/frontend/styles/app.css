@@ -1,0 +1,39 @@
+/* Tailwind CSSを読み込む */
+@import "tailwindcss" source(none);
+
+/* CSSクラスを調べる対象 */
+@source "../../webapp/WEB-INF/views";
+@source "../../webapp/WEB-INF/tags";
+@source "../../webapp/assets/js";
+
+/* daisyUIとテーマの設定 */
+@plugin "daisyui" {
+    themes: light --default, dark;
+}
+
+/* アプリ全体の基本設定 */
+@layer base {
+    body {
+        font-family: "Yu Gothic", "Meiryo", system-ui, sans-serif;
+    }
+}
+
+/* 必要になったら、自作の共通スタイルをここへ追加する */
+@layer components {
+    .page-container {
+        width: min(100% - 2rem, 72rem);
+        margin-inline: auto;
+    }
+}
+
+@layer components {
+    .htmx-indicator {
+        opacity: 0;
+        transition: opacity 150ms ease-in;
+    }
+
+    .htmx-request .htmx-indicator,
+    .htmx-request.htmx-indicator {
+        opacity: 1;
+    }
+}
