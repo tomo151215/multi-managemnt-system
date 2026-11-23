@@ -1,0 +1,6 @@
+<%@ page pageEncoding="UTF-8" %>
+<footer class="px-6 py-6 text-center text-xs text-base-content/50">
+    宮崎マルチメディア専門学校 · Campus One
+</footer>
+</body>
+</html>

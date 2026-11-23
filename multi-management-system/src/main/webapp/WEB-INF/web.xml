@@ -1,7 +1,59 @@
-<!DOCTYPE web-app PUBLIC
- "-//Sun Microsystems, Inc.//DTD Web Application 2.3//EN"
- "http://java.sun.com/dtd/web-app_2_3.dtd" >
-
-<web-app>
-  <display-name>Archetype Created Web Application</display-name>
+<?xml version="1.0" encoding="UTF-8"?>
+<web-app xmlns="https://jakarta.ee/xml/ns/jakartaee"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="https://jakarta.ee/xml/ns/jakartaee https://jakarta.ee/xml/ns/jakartaee/web-app_6_1.xsd"
+  version="6.1">
+  <display-name>Multi Management System</display-name>
+  <listener>
+    <listener-class>jp.m.multi.listener.AppInitializer</listener-class>
+  </listener>
+  <filter>
+    <filter-name>encoding</filter-name>
+    <filter-class>jp.m.multi.filter.EncodingFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>encoding</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  <filter>
+    <filter-name>headers</filter-name>
+    <filter-class>jp.m.multi.filter.SecurityHeadersFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>headers</filter-name>
+    <url-pattern>/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  <filter>
+    <filter-name>authentication</filter-name>
+    <filter-class>jp.m.multi.filter.AuthenticationFilter</filter-class>
+  </filter>
+  <filter-mapping>
+    <filter-name>authentication</filter-name>
+    <url-pattern>/app/*</url-pattern>
+    <dispatcher>REQUEST</dispatcher>
+  </filter-mapping>
+  <servlet>
+    <servlet-name>front</servlet-name>
+    <servlet-class>jp.m.multi.controller.FrontController</servlet-class>
+    <load-on-startup>1</load-on-startup>
+  </servlet>
+  <servlet-mapping>
+    <servlet-name>front</servlet-name>
+    <url-pattern>/app/*</url-pattern>
+    <url-pattern />
+  </servlet-mapping>
+  <session-config>
+    <session-timeout>20</session-timeout>
+    <tracking-mode>COOKIE</tracking-mode>
+  </session-config>
+  <error-page>
+    <error-code>404</error-code>
+    <location>/WEB-INF/views/error/not-found.jsp</location>
+  </error-page>
+  <error-page>
+    <exception-type>java.lang.Throwable</exception-type>
+    <location>/WEB-INF/views/error/unexpected.jsp</location>
+  </error-page>
 </web-app>

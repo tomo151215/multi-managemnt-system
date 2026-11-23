@@ -1,0 +1,19 @@
+{
+    "name": "multi-management-system-ui",
+    "version": "0.1.0",
+    "private": true,
+    "scripts": {
+        "build:css": "tailwindcss -i ./src/main/frontend/styles/app.css -o ./src/main/webapp/assets/css/app.css --minify",
+        "watch:css": "tailwindcss -i ./src/main/frontend/styles/app.css -o ./src/main/webapp/assets/css/app.css --watch",
+        "copy:vendor": "node scripts/copy-vendor.mjs",
+        "build": "npm run build:css && npm run copy:vendor"
+    },
+    "devDependencies": {
+        "@tailwindcss/cli": "4.3.5",
+        "daisyui": "5.8.1",
+        "tailwindcss": "4.3.5"
+    },
+    "dependencies": {
+        "htmx.org": "2.0.11"
+    }
+}

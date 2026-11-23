@@ -1,0 +1,4 @@
+db.url=jdbc:mysql://localhost:3306/multi_management_system?connectionTimeZone=Asia/Tokyo
+db.user=multi_app
+db.password=自分の開発DBのパスワード
+app.cookie.secure=false
