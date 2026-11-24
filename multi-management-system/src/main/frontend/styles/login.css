@@ -1,0 +1,35 @@
+/* フッタはこの領域の下に表示します。小さな画面では縦にスクロールできます。 */
+.login-page {
+    display: flex;
+    flex-direction: column;
+    min-height: 90vh;
+    min-height: 90svh;
+}
+
+/* colorが光の色、background-colorが光の下地の色です。 */
+/* ライトモード：青系 */
+.login-page .login-aura.aura {
+    color: #2563eb;
+    background-color: #dbeafe;
+}
+
+/* ダークモード：黄色系 */
+[data-theme="dark"] .login-page .login-aura.aura {
+    color: #facc15;
+    background-color: #55451a;
+}
+
+@media (prefers-color-scheme: dark) {
+    :root:not([data-theme]) .login-page .login-aura.aura {
+        color: #facc15;
+        background-color: #55451a;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .login-aura,
+    .login-aura::before,
+    .login-aura::after {
+        animation: none;
+    }
+}

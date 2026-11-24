@@ -1,79 +1,95 @@
 (function () {
-    var storageKey = "multi-management-system-theme";
-    var savedTheme = null;
+    "use strict";
 
-    // 前回選んだテーマを読み取る
-    try {
-        savedTheme = localStorage.getItem(storageKey);
-    } catch (error) {
-        // 保存機能が利用できない場合は、今回の画面内だけで切り替える
-    }
+    const storageKey = "campus-theme";
+    const html = document.documentElement;
 
-    var theme;
-
-    if (savedTheme === "light" || savedTheme === "dark") {
-        theme = savedTheme;
-    } else if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
-        theme = "dark";
-    } else {
-        theme = "light";
-    }
-
-    // HTML全体へテーマを適用する
-    document.documentElement.setAttribute("data-theme", theme);
-
-    function updateButtons() {
-        var buttons = document.querySelectorAll("[data-theme-toggle]");
-        var currentTheme =
-            document.documentElement.getAttribute("data-theme");
-
-        for (var i = 0; i < buttons.length; i++) {
-            buttons[i].setAttribute(
-                "aria-pressed",
-                currentTheme === "dark" ? "true" : "false"
-            );
-        }
-    }
-
-    document.addEventListener("DOMContentLoaded", function () {
-        updateButtons();
-    });
-
-    // ボタンが後からHTMXで追加された場合にも対応する
-    document.addEventListener("click", function (event) {
-        if (!(event.target instanceof Element)) {
-            return;
-        }
-
-        var button = event.target.closest("[data-theme-toggle]");
-
-        if (button === null) {
-            return;
-        }
-
-        var currentTheme =
-            document.documentElement.getAttribute("data-theme");
-
-        var nextTheme;
-
-        if (currentTheme === "dark") {
-            nextTheme = "light";
-        } else {
-            nextTheme = "dark";
-        }
-
-        document.documentElement.setAttribute("data-theme", nextTheme);
+    // 保存済みの配色を取得します。
+    function readTheme() {
+        let savedTheme = null;
 
         try {
-            localStorage.setItem(storageKey, nextTheme);
+            savedTheme = localStorage.getItem(storageKey);
         } catch (error) {
-            // 保存できなくてもテーマ切替は続ける
+            // 保存領域を利用できない場合はOSの設定を使います。
         }
 
-        updateButtons();
+        if (savedTheme === "light" || savedTheme === "dark") {
+            return savedTheme;
+        }
+
+        if (window.matchMedia("(prefers-color-scheme: dark)").matches) {
+            return "dark";
+        }
+
+        return "light";
+    }
+
+    // 画面と切替部品の状態をそろえます。
+    function applyTheme(theme) {
+        html.dataset.theme = theme;
+
+        const controls = document.querySelectorAll(
+            "#login-theme-toggle, [data-theme-toggle]"
+        );
+
+        controls.forEach(function (control) {
+            if (control.matches('input[type="checkbox"]')) {
+                control.checked = theme === "dark";
+            } else {
+                control.setAttribute(
+                    "aria-pressed",
+                    String(theme === "dark")
+                );
+            }
+        });
+    }
+
+    // 配色を変更し、次のページでも使えるように保存します。
+    function saveTheme(theme) {
+        applyTheme(theme);
+
+        try {
+            localStorage.setItem(storageKey, theme);
+        } catch (error) {
+            // 保存できなくても現在の画面には反映します。
+        }
+    }
+
+    // headで実行し、本文が表示される前に復元します。
+    applyTheme(readTheme());
+
+    // HTMLが完成してから切替操作を登録します。
+    document.addEventListener("DOMContentLoaded", function () {
+        applyTheme(html.dataset.theme);
+
+        const controls = document.querySelectorAll(
+            "#login-theme-toggle, [data-theme-toggle]"
+        );
+
+        controls.forEach(function (control) {
+            if (control.matches('input[type="checkbox"]')) {
+                control.addEventListener("change", function () {
+                    if (control.checked) {
+                        saveTheme("dark");
+                    } else {
+                        saveTheme("light");
+                    }
+                });
+            } else {
+                control.addEventListener("click", function () {
+                    if (html.dataset.theme === "dark") {
+                        saveTheme("light");
+                    } else {
+                        saveTheme("dark");
+                    }
+                });
+            }
+        });
     });
 
-    document.addEventListener("htmx:afterSwap", function () {
-        updateButtons();
+    // ブラウザの「戻る」で復元された画面も同期します。
+    window.addEventListener("pageshow", function () {
+        applyTheme(readTheme());
     });
 })();
