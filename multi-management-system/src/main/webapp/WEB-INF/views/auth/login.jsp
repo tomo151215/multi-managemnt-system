@@ -169,35 +169,101 @@
 </div>
 
 <!-- パスワード再設定案内モーダル -->
-<dialog id="forgot-password-modal"
-        class="modal modal-bottom sm:modal-middle"
-        aria-labelledby="forgot-password-title"
-        aria-describedby="forgot-password-desc">
-    <div class="modal-box">
-        <div class="flex items-start gap-3">
-            <div class="flex h-10 w-10 shrink-0 items-center justify-center rounded-full bg-info/15 text-info"
-                 aria-hidden="true">
-                <svg class="h-5 w-5" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" d="m11.25 11.25.041-.02a.75.75 0 0 1 1.063.852l-.708 2.836a.75.75 0 0 0 1.063.853l.041-.021M21 12a9 9 0 1 1-18 0 9 9 0 0 1 18 0Zm-9-3.75h.008v.008H12V8.25Z" />
+<!-- パスワード再設定の案内 -->
+<dialog
+    id="forgot-password-modal"
+    class="modal modal-middle"
+    aria-labelledby="forgot-password-title"
+    aria-describedby="forgot-password-desc">
+
+    <div class="modal-box relative w-[calc(100%-2rem)] max-w-md p-6 sm:p-8">
+
+        <!-- 右上の閉じるボタン -->
+        <form method="dialog" class="absolute right-3 top-3 m-0">
+            <button
+                type="submit"
+                class="btn btn-ghost btn-circle btn-sm"
+                aria-label="案内を閉じる">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    class="size-5"
+                    aria-hidden="true">
+                    <path d="m6 6 12 12M18 6 6 18"></path>
+                </svg>
+            </button>
+        </form>
+
+        <!-- アイコンと見出し -->
+        <div class="flex flex-col items-center pt-3 text-center">
+
+            <div
+                class="flex size-14 shrink-0 items-center justify-center rounded-2xl bg-primary/10 text-primary"
+                aria-hidden="true">
+
+                <svg
+                    xmlns="http://www.w3.org/2000/svg"
+                    viewBox="0 0 24 24"
+                    fill="none"
+                    stroke="currentColor"
+                    stroke-width="1.8"
+                    stroke-linecap="round"
+                    stroke-linejoin="round"
+                    class="size-7">
+                    <rect x="5" y="10" width="14" height="11" rx="2"></rect>
+                    <path d="M8 10V7a4 4 0 0 1 8 0v3"></path>
+                    <path d="M12 14v3"></path>
                 </svg>
             </div>
-            <div>
-                <h2 id="forgot-password-title" class="text-lg font-bold">パスワードを忘れた場合</h2>
-                <p id="forgot-password-desc" class="mt-2 text-sm leading-relaxed text-base-content/80">
-                    担任または教職員へパスワードを忘れた旨を伝えてください。教職員専用の管理画面からパスワードの再設定を行うことができます。
-                </p>
-            </div>
+
+            <h2
+                id="forgot-password-title"
+                class="mt-5 text-xl font-bold leading-snug">
+                パスワードを忘れた場合
+            </h2>
+
+            <p
+                id="forgot-password-desc"
+                class="mt-3 text-sm leading-7 text-base-content/70">
+                担任または教職員へ、<br>
+                パスワードの再設定をご依頼ください。
+            </p>
         </div>
 
-        <div class="modal-action mt-6">
-            <form method="dialog">
-                <button type="submit" class="btn btn-primary btn-sm sm:btn-md">わかりました</button>
-            </form>
+        <!-- 補足説明 -->
+        <div class="mt-6 rounded-xl border border-base-300 bg-base-200 p-4">
+            <p class="text-sm font-semibold">
+                再設定の手順
+            </p>
+
+            <ol class="mt-2 list-decimal space-y-2 pl-5 text-sm leading-6 text-base-content/75">
+                <li>担任または教職員へ連絡します。</li>
+                <li>教職員管理画面で再設定します。</li>
+                <li>新しいパスワードでログインします。</li>
+            </ol>
         </div>
+
+        <!-- 下部の閉じるボタン -->
+        <form method="dialog" class="mt-6">
+            <button
+                type="submit"
+                class="btn btn-primary w-full"
+                autofocus>
+                わかりました
+            </button>
+        </form>
     </div>
-    <!-- モーダル外クリックで閉じるためのバックドロップ -->
+
+    <!-- 背景をクリックして閉じる -->
     <form method="dialog" class="modal-backdrop">
-        <button type="submit">閉じる</button>
+        <button type="submit" aria-label="案内を閉じる">
+            閉じる
+        </button>
     </form>
 </dialog>
 

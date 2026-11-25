@@ -2,4 +2,10 @@
     </main>
 </div>
 
-<script src="<c:url value='/assets/js/common/dashboard.js' />" defer></script>
+<script
+    src="<c:url value='/assets/js/common/dashboard.js' />"
+    defer></script>
+
+<script
+    src="<c:url value='/assets/js/common/gmail.js' />"
+    defer></script>

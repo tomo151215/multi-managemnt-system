@@ -1,7 +1,12 @@
-/* サイドバー・Navbar・本文の配置 */
+/* ========================================
+   全体レイアウト
+   ======================================== */
+
 .dashboard-shell {
     --sidebar-width: 208px;
     --navbar-height: 56px;
+    --sidebar-duration: 240ms;
+    --sidebar-easing: cubic-bezier(0.2, 0, 0, 1);
 
     display: grid;
     grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
@@ -15,15 +20,21 @@
     color: var(--color-base-content);
     background-color: var(--color-base-200);
 
-    transition: grid-template-columns 0.2s ease;
+    transition:
+        grid-template-columns
+        var(--sidebar-duration)
+        var(--sidebar-easing);
 }
 
-/* 折りたたんでもアイコン領域を残す */
 .dashboard-shell.is-collapsed {
     --sidebar-width: 56px;
 }
 
-/* 左側 */
+
+/* ========================================
+   サイドバー
+   ======================================== */
+
 .dashboard-shell .dashboard-sidebar {
     grid-column: 1;
     grid-row: 1 / 3;
@@ -38,12 +49,15 @@
     border-right: 1px solid var(--color-base-300);
 }
 
+/* 開閉ボタンの領域 */
 .dashboard-sidebar-top {
     display: flex;
     align-items: center;
-    height: var(--navbar-height);
     flex-shrink: 0;
+
+    height: var(--navbar-height);
     padding: 0 10px;
+
     color: var(--color-primary);
     border-bottom: 1px solid var(--color-base-300);
 }
@@ -52,27 +66,33 @@
     display: none;
 }
 
-.is-collapsed .dashboard-open-icon {
+.dashboard-shell.is-collapsed .dashboard-open-icon {
     display: block;
 }
 
-.is-collapsed .dashboard-close-icon {
+.dashboard-shell.is-collapsed .dashboard-close-icon {
     display: none;
 }
 
-/* メニュー一覧 */
+
+/* ========================================
+   メニュー項目
+   ======================================== */
+
 .dashboard-menu {
     flex: 1;
     min-height: 0;
+    padding: 8px 4px;
+
     overflow-x: hidden;
     overflow-y: auto;
-    padding: 8px;
 }
 
 .dashboard-menu ul {
     display: flex;
     flex-direction: column;
     gap: 4px;
+
     margin: 0;
     padding: 0;
     list-style: none;
@@ -82,22 +102,30 @@
 .dashboard-menu li > button {
     display: flex;
     align-items: center;
+    justify-content: flex-start;
     gap: 12px;
 
     width: 100%;
-    min-height: 42px;
-    padding: 10px;
+    min-height: 44px;
+    padding: 10px 14px;
+    overflow: hidden;
+
     border: 0;
     border-radius: 6px;
 
     color: inherit;
-    background: transparent;
+    background-color: transparent;
+
     font: inherit;
     font-size: 14px;
     text-align: left;
     text-decoration: none;
     white-space: nowrap;
     cursor: pointer;
+
+    transition:
+        background-color 160ms ease,
+        color 160ms ease;
 }
 
 .dashboard-menu li > a:hover,
@@ -105,7 +133,7 @@
     background-color: var(--color-base-200);
 }
 
-/* 現在表示しているページ */
+/* 現在のページ */
 .dashboard-menu li > a[aria-current="page"],
 .dashboard-menu li > a[aria-current="page"]:hover {
     color: var(--color-primary-content);
@@ -123,91 +151,147 @@
     cursor: not-allowed;
 }
 
-.dashboard-menu a:focus-visible,
-.dashboard-menu button:focus-visible,
-.dashboard-sidebar-logout:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: -2px;
+/* 文字の領域を残したままフェードさせる */
+.dashboard-menu-label {
+    display: inline-block;
+    flex-shrink: 0;
+    white-space: nowrap;
+
+    opacity: 1;
+    transform: translateX(0);
+
+    transition:
+        opacity 160ms ease,
+        transform var(--sidebar-duration) var(--sidebar-easing);
 }
 
-/* 折りたたみ時は文字を隠してアイコンを中央へ */
-.is-collapsed .dashboard-menu-label,
-.is-collapsed .dashboard-sidebar-avatar {
-    display: none;
+.dashboard-shell.is-collapsed .dashboard-menu-label {
+    opacity: 0;
+    transform: translateX(-6px);
+    pointer-events: none;
 }
 
-.is-collapsed .dashboard-menu {
-    padding: 8px 4px;
+
+/* ========================================
+   サイドバー下部
+   Avatarとログアウトは別領域
+   ======================================== */
+
+.sidebar-account {
+    display: grid;
+    grid-template-columns: 44px minmax(0, 1fr);
+    align-items: center;
+    flex-shrink: 0;
+
+    height: 72px;
+    padding: 0 8px;
+
+    border-top: 1px solid var(--color-base-300);
+
+    transition:
+        grid-template-columns
+        var(--sidebar-duration)
+        var(--sidebar-easing);
 }
 
-.is-collapsed .dashboard-menu li > a,
-.is-collapsed .dashboard-menu li > button {
-    justify-content: center;
-    gap: 0;
-    padding: 10px 0;
-}
-
-/* サイドバー下部 */
-.dashboard-sidebar-bottom {
+.sidebar-account-avatar {
     display: flex;
     align-items: center;
-    gap: 8px;
-    flex-shrink: 0;
-    min-height: 60px;
-    padding: 10px;
-    border-top: 1px solid var(--color-base-300);
+    justify-content: center;
+    min-width: 0;
+
+    opacity: 1;
+    visibility: visible;
+
+    transition:
+        opacity 140ms ease,
+        visibility 140ms ease;
 }
 
-.dashboard-sidebar-bottom form {
-    flex: 1;
+/* Avatarが列幅に合わせて縮まないようにする */
+.sidebar-account-avatar > .avatar {
+    flex-shrink: 0;
+}
+
+.sidebar-account-form {
     min-width: 0;
     margin: 0;
 }
 
-.dashboard-sidebar-avatar {
-    flex-shrink: 0;
-}
-
-.dashboard-sidebar-logout {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    gap: 8px;
-
-    width: 100%;
-    min-height: 36px;
-    padding: 4px;
-    border: 0;
-    border-radius: 6px;
-
-    color: inherit;
-    background: transparent;
-    font-size: 12px;
-    cursor: pointer;
-}
-
-.dashboard-sidebar-logout:hover {
-    background-color: var(--color-base-200);
-}
-
-.is-collapsed .dashboard-sidebar-bottom {
-    justify-content: center;
-    padding: 10px 4px;
-}
-
-.is-collapsed .dashboard-sidebar-logout {
-    justify-content: center;
-}
-
-/* 右上Navbar */
-.dashboard-navbar {
-    grid-column: 2;
-    grid-row: 1;
+.sidebar-account-logout {
     display: flex;
     align-items: center;
     justify-content: flex-end;
+    gap: 8px;
+
+    width: 100%;
+    height: 44px;
+    padding: 0 10px;
+    overflow: hidden;
+
+    border: 0;
+    border-radius: 10px;
+
+    color: var(--color-base-content);
+    background-color: transparent;
+
+    font: inherit;
+    font-size: 12px;
+    white-space: nowrap;
+    cursor: pointer;
+
+    transition: background-color 160ms ease;
+}
+
+.sidebar-account-logout:hover {
+    background-color: var(--color-base-200);
+}
+
+.sidebar-account-logout svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+
+    color: var(--color-error);
+}
+
+.sidebar-account-label {
+    flex-shrink: 0;
+    white-space: nowrap;
+    opacity: 1;
+
+    transition: opacity 120ms ease;
+}
+
+.dashboard-shell.is-collapsed .sidebar-account {
+    grid-template-columns: 0 minmax(0, 1fr);
+}
+
+.dashboard-shell.is-collapsed .sidebar-account-avatar {
+    opacity: 0;
+    visibility: hidden;
+    pointer-events: none;
+}
+
+.dashboard-shell.is-collapsed .sidebar-account-label {
+    opacity: 0;
+}
+
+
+/* ========================================
+   Navbar
+   ======================================== */
+
+.dashboard-navbar {
+    grid-column: 2;
+    grid-row: 1;
+
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+
     min-width: 0;
-    padding: 0 16px;
+    padding: 0 20px;
 
     background-color: var(--color-base-100);
     border-bottom: 1px solid var(--color-base-300);
@@ -216,23 +300,111 @@
 .dashboard-navbar-actions {
     display: flex;
     align-items: center;
-    gap: 10px;
+    gap: 16px;
 }
 
-.dashboard-navbar-actions form {
+.navbar-tools,
+.navbar-account {
+    display: flex;
+    align-items: center;
+    flex-shrink: 0;
+}
+
+.navbar-tools {
+    gap: 4px;
+}
+
+.navbar-account {
+    gap: 12px;
+}
+
+.navbar-account form {
     margin: 0;
 }
 
-/* 本文だけをスクロール */
+.navbar-separator {
+    width: 1px;
+    height: 24px;
+    flex-shrink: 0;
+
+    background-color: var(--color-base-300);
+}
+
+.navbar-icon-button {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    flex-shrink: 0;
+    padding: 0;
+}
+
+.navbar-icon-button svg {
+    width: 22px;
+    height: 22px;
+}
+
+.navbar-logout {
+    height: 44px;
+    min-height: 44px;
+    gap: 8px;
+    padding: 0 10px;
+
+    font-size: 12px;
+}
+
+.navbar-logout svg {
+    width: 20px;
+    height: 20px;
+    flex-shrink: 0;
+
+    color: var(--color-error);
+}
+
+
+/* ========================================
+   本文
+   ======================================== */
+
 .dashboard-content {
     grid-column: 2;
     grid-row: 2;
+
     min-width: 0;
     min-height: 0;
-    overflow: auto;
     padding: 24px;
+    overflow: auto;
+
     background-color: var(--color-base-200);
 }
+
+
+/* ========================================
+   キーボード操作
+   ======================================== */
+
+.dashboard-menu a:focus-visible,
+.dashboard-menu button:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: -2px;
+}
+
+.sidebar-account-logout:focus-visible,
+.navbar-icon-button:focus-visible,
+.navbar-logout:focus-visible {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+/* 配色切替のチェックボックスへフォーカスした場合 */
+.navbar-icon-button:has(input:focus-visible) {
+    outline: 2px solid var(--color-primary);
+    outline-offset: 2px;
+}
+
+
+/* ========================================
+   小さい画面
+   ======================================== */
 
 @media (max-width: 639px) {
     .dashboard-navbar {
@@ -240,7 +412,20 @@
     }
 
     .dashboard-navbar-actions {
-        gap: 4px;
+        gap: 8px;
+    }
+
+    .navbar-tools {
+        gap: 0;
+    }
+
+    .navbar-account {
+        gap: 8px;
+    }
+
+    .navbar-logout {
+        width: 44px;
+        padding: 0;
     }
 
     .dashboard-content {
@@ -248,8 +433,20 @@
     }
 }
 
+
+/* ========================================
+   動きを抑える設定
+   ======================================== */
+
 @media (prefers-reduced-motion: reduce) {
-    .dashboard-shell {
+    .dashboard-shell,
+    .dashboard-menu li > a,
+    .dashboard-menu li > button,
+    .dashboard-menu-label,
+    .sidebar-account,
+    .sidebar-account-avatar,
+    .sidebar-account-label,
+    .sidebar-account-logout {
         transition: none;
     }
 }

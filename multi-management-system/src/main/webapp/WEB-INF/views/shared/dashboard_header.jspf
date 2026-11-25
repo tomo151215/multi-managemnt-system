@@ -45,25 +45,28 @@
                         </ul>
                     </nav>
 
-                    <!-- サイドバー下部 -->
-                    <div class="dashboard-sidebar-bottom">
-                        <div class="avatar dashboard-sidebar-avatar">
-                            <div class="ring-primary ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2">
-                                <img src="${fn:escapeXml(profileImageUrl)}" alt="プロフィール画像" width="32" height="32"
-                                    class="object-cover">
+                    <!-- サイドバー下部：Avatarとログアウトを分離 -->
+                    <div class="sidebar-account">
+
+                        <div class="sidebar-account-avatar">
+                            <div class="avatar">
+                                <div class="ring-primary ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2">
+                                    <img src="${fn:escapeXml(profileImageUrl)}" alt="プロフィール画像" width="32" height="32"
+                                        class="object-cover">
+                                </div>
                             </div>
                         </div>
 
-                        <form method="post" action="<c:url value='/app/auth/logout' />">
+                        <form method="post" action="<c:url value='/app/auth/logout' />" class="sidebar-account-form">
 
                             <input type="hidden" name="csrfToken" value="${fn:escapeXml(sessionScope.csrfToken)}">
 
-                            <button type="submit" class="dashboard-sidebar-logout" aria-label="ログアウト" title="ログアウト">
+                            <button type="submit" class="sidebar-account-logout" aria-label="ログアウト" title="ログアウト">
 
-                                <span class="dashboard-menu-label">ログアウト</span>
+                                <span class="sidebar-account-label">ログアウト</span>
 
-                                <svg class="size-5 text-error" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
                                     stroke-linejoin="round" aria-hidden="true">
                                     <path d="M9 4H4v16h5"></path>
                                     <path d="M9 12h12m-4-4 4 4-4 4"></path>
@@ -73,63 +76,76 @@
                     </div>
                 </aside>
 
-                <!-- 右上Navbar -->
                 <header class="dashboard-navbar">
-
                     <div class="dashboard-navbar-actions">
 
-                        <!-- メール機能の接続先が未確定のため無効化 -->
-                        <button type="button" class="btn btn-ghost btn-square btn-sm" aria-label="メール" title="メール（準備中）"
-                            disabled>
-                            <svg class="size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
-                                stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"
-                                aria-hidden="true">
-                                <rect x="3" y="5" width="18" height="14" rx="1"></rect>
-                                <path d="m3 6 9 7 9-7"></path>
-                            </svg>
-                        </button>
+                        <!-- 操作グループ -->
+                        <div class="navbar-tools">
 
-                        <!-- 共通theme.jsで制御 -->
-                        <label class="swap swap-rotate btn btn-ghost btn-circle btn-sm">
-                            <input type="checkbox" data-theme-toggle aria-label="ダークモードを使用する">
+                            <a id="open-gmail" href="https://mail.google.com/mail/?view=cm&amp;fs=1" target="_blank"
+                                rel="noopener noreferrer" class="btn btn-ghost btn-circle navbar-icon-button"
+                                aria-label="Gmailでメールを作成（別ウィンドウ）" title="Gmailでメールを作成">
 
-                            <svg class="swap-on size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                                aria-hidden="true">
-                                <circle cx="12" cy="12" r="4"></circle>
-                                <path d="M12 2v2M12 20v2M2 12h2M20 12h2"></path>
-                                <path d="m5 5 1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"></path>
-                            </svg>
+                                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <rect x="3" y="5" width="18" height="14" rx="2"></rect>
+                                    <path d="m3 7 9 6 9-6"></path>
+                                </svg>
+                            </a>
 
-                            <svg class="swap-off size-6" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"
-                                stroke-linejoin="round" aria-hidden="true">
-                                <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
-                            </svg>
-                        </label>
+                            <label class="swap swap-rotate btn btn-ghost btn-circle navbar-icon-button"
+                                title="配色を切り替える">
 
-                        <div class="avatar">
-                            <div class="ring-primary ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2">
-                                <img src="${fn:escapeXml(profileImageUrl)}" alt="プロフィール画像" width="32" height="32"
-                                    class="object-cover">
-                            </div>
+                                <input type="checkbox" data-theme-toggle aria-label="ダークモードを使用する">
+
+                                <svg class="swap-on" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.7" stroke-linecap="round" aria-hidden="true">
+                                    <circle cx="12" cy="12" r="4"></circle>
+                                    <path d="M12 2v2M12 20v2M2 12h2M20 12h2"></path>
+                                    <path d="m5 5 1.5 1.5m11 11L19 19M5 19l1.5-1.5m11-11L19 5"></path>
+                                </svg>
+
+                                <svg class="swap-off" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                    stroke="currentColor" stroke-width="1.7" stroke-linecap="round"
+                                    stroke-linejoin="round" aria-hidden="true">
+                                    <path d="M12 3a6 6 0 0 0 9 9 9 9 0 1 1-9-9Z"></path>
+                                </svg>
+                            </label>
+
                         </div>
 
-                        <form method="post" action="<c:url value='/app/auth/logout' />">
+                        <span class="navbar-separator" aria-hidden="true"></span>
 
-                            <input type="hidden" name="csrfToken" value="${fn:escapeXml(sessionScope.csrfToken)}">
+                        <!-- アカウントグループ -->
+                        <div class="navbar-account">
 
-                            <button type="submit" class="btn btn-ghost btn-sm gap-2" aria-label="ログアウト">
-                                <span class="hidden sm:inline">ログアウト</span>
+                            <div class="avatar shrink-0">
+                                <div class="ring-primary ring-offset-base-100 w-8 rounded-full ring-2 ring-offset-2">
+                                    <img src="${fn:escapeXml(profileImageUrl)}" alt="プロフィール画像" width="32" height="32"
+                                        class="object-cover">
+                                </div>
+                            </div>
 
-                                <svg class="size-5 text-error" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24"
-                                    fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
-                                    stroke-linejoin="round" aria-hidden="true">
-                                    <path d="M9 4H4v16h5"></path>
-                                    <path d="M9 12h12m-4-4 4 4-4 4"></path>
-                                </svg>
-                            </button>
-                        </form>
+                            <form method="post" action="<c:url value='/app/auth/logout' />">
+
+                                <input type="hidden" name="csrfToken" value="${fn:escapeXml(sessionScope.csrfToken)}">
+
+                                <button type="submit" class="btn btn-ghost navbar-logout" aria-label="ログアウト"
+                                    title="ログアウト">
+
+                                    <span class="hidden sm:inline">ログアウト</span>
+
+                                    <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" fill="none"
+                                        stroke="currentColor" stroke-width="1.8" stroke-linecap="round"
+                                        stroke-linejoin="round" aria-hidden="true">
+                                        <path d="M9 4H4v16h5"></path>
+                                        <path d="M9 12h12m-4-4 4 4-4 4"></path>
+                                    </svg>
+                                </button>
+                            </form>
+
+                        </div>
                     </div>
                 </header>
 
