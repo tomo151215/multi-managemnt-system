@@ -1,6 +1,7 @@
 /* Tailwind CSSを読み込む */
 @import "tailwindcss" source(none);
 @import "./login.css";
+@import "./dashboard.css";
 
 /* CSSクラスを調べる対象 */
 @source "../../webapp/WEB-INF/views";
