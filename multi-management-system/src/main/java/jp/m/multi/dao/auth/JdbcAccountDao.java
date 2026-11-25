@@ -7,7 +7,6 @@ import java.sql.SQLException;
 import jp.m.multi.dto.auth.AccountAuthDto;
 import jp.m.multi.dto.auth.AccountStatusDto;
 
-/** Serviceから借りたConnectionは、DAOでは閉じません。 */
 public class JdbcAccountDao implements AccountDao {
     private static final String COLUMNS =
             "a.account_id, a.account_type, a.is_active AS account_active, "
