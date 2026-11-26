@@ -1,0 +1,11 @@
+<%@ page pageEncoding="UTF-8" %>
+<%--
+    【実装場所：生徒要録】
+    本文をここへ実装します。URL /app/academic/students とActionは維持できます。
+    表示データはAction→Service→DAOで取得し、DTOとしてrequestへ渡します。
+    JavaScriptのscriptタグや共通ヘッダは本文へ追加しません。
+    POST機能を追加する場合は別のPostActionとCSRF検証が必要です。
+--%>
+<h2 class="text-xl font-bold">生徒要録の表示領域</h2>
+<p class="mt-3 leading-7 text-base-content/70">生徒を検索し、在籍情報や基本情報を確認します。</p>
+<p class="mt-4 text-sm text-base-content/60">この本文はダミーです。データの取得・保存はまだ行いません。</p>

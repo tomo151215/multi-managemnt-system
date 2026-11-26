@@ -1,13 +1,86 @@
 /* ========================================
-   全体レイアウト
+   テーマ・共通サイズ
    ======================================== */
 
 .dashboard-shell {
+    /* レイアウト・アニメーション */
     --sidebar-width: 208px;
     --navbar-height: 56px;
     --sidebar-duration: 240ms;
     --sidebar-easing: cubic-bezier(0.2, 0, 0, 1);
 
+    /* アカウント領域サイズ */
+    --account-avatar-size: 32px;
+    --account-button-height: 44px;
+    --account-button-radius: 10px;
+    --account-icon-size: 16px;
+    --account-gap: 12px;
+
+    /* ライトテーマ（デフォルト） */
+    --sidebar-bg: #eef2ff;
+    --sidebar-text: #334155;
+    --navbar-bg: #ffffff;
+    --content-bg: #f1f5f9;
+    --layout-border: #cbd5e1;
+
+    --menu-hover-bg: #e2e8f0;
+    --menu-hover-color: #0f172a;
+    --menu-active-bg: #e0e7ff;
+    --menu-active-color: #3730a3;
+    --menu-active-hover-bg: #c7d2fe;
+    --menu-active-indicator: #6366f1;
+
+    --logout-color: #b91c1c;
+    --logout-bg: #fff7f7;
+    --logout-border: #fecaca;
+    --logout-hover-bg: #fee2e2;
+    --logout-hover-color: #991b1b;
+    --logout-hover-border: #f87171;
+    --logout-pressed-bg: #fecaca;
+    --logout-hover-shadow: 0 3px 10px rgb(185 28 28 / 12%);
+
+    --focus-ring-color: #6366f1;
+}
+
+html[data-theme="dark"] .dashboard-shell {
+    --sidebar-bg: #1e293b;
+    --sidebar-text: #e2e8f0;
+    --navbar-bg: #172033;
+    --content-bg: #0b1120;
+    --layout-border: #3b4960;
+
+    --menu-hover-bg: #3b4963;
+    --menu-hover-color: #ffffff;
+    --menu-active-bg: #3730a3;
+    --menu-active-color: #ffffff;
+    --menu-active-hover-bg: #4338ca;
+    --menu-active-indicator: #a5b4fc;
+
+    --logout-color: #fda4af;
+    --logout-bg: #30202b;
+    --logout-border: #754052;
+    --logout-hover-bg: #54232d;
+    --logout-hover-color: #ffe4e6;
+    --logout-hover-border: #fb7185;
+    --logout-pressed-bg: #70303c;
+    --logout-hover-shadow: 0 3px 12px rgb(0 0 0 / 20%);
+
+    --focus-ring-color: #a5b4fc;
+}
+
+.dashboard-shell,
+.dashboard-shell *,
+.dashboard-shell *::before,
+.dashboard-shell *::after {
+    box-sizing: border-box;
+}
+
+
+/* ========================================
+   全体レイアウト
+   ======================================== */
+
+.dashboard-shell {
     display: grid;
     grid-template-columns: var(--sidebar-width) minmax(0, 1fr);
     grid-template-rows: var(--navbar-height) minmax(0, 1fr);
@@ -18,12 +91,9 @@
     overflow: hidden;
 
     color: var(--color-base-content);
-    background-color: var(--color-base-200);
+    background-color: var(--content-bg);
 
-    transition:
-        grid-template-columns
-        var(--sidebar-duration)
-        var(--sidebar-easing);
+    transition: grid-template-columns var(--sidebar-duration) var(--sidebar-easing);
 }
 
 .dashboard-shell.is-collapsed {
@@ -45,21 +115,33 @@
     min-height: 0;
     overflow: hidden;
 
-    background-color: var(--color-base-100);
-    border-right: 1px solid var(--color-base-300);
+    color: var(--sidebar-text);
+    background-color: var(--sidebar-bg);
+    border-right: 1px solid var(--layout-border);
 }
 
-/* 開閉ボタンの領域 */
 .dashboard-sidebar-top {
     display: flex;
     align-items: center;
     flex-shrink: 0;
 
     height: var(--navbar-height);
-    padding: 0 10px;
+    padding: 0 6px;
 
     color: var(--color-primary);
-    border-bottom: 1px solid var(--color-base-300);
+    border-bottom: 1px solid var(--layout-border);
+}
+
+.dashboard-shell #dashboard-menu-toggle {
+    width: 44px;
+    height: 44px;
+    min-height: 44px;
+    padding: 0;
+    border-radius: 10px;
+
+    transition:
+        background-color 160ms ease,
+        color 160ms ease;
 }
 
 .dashboard-open-icon {
@@ -111,13 +193,14 @@
     overflow: hidden;
 
     border: 0;
-    border-radius: 6px;
+    border-radius: 8px;
 
     color: inherit;
     background-color: transparent;
 
     font: inherit;
     font-size: 14px;
+    font-weight: 600;
     text-align: left;
     text-decoration: none;
     white-space: nowrap;
@@ -125,19 +208,26 @@
 
     transition:
         background-color 160ms ease,
-        color 160ms ease;
+        color 160ms ease,
+        box-shadow 160ms ease;
 }
 
 .dashboard-menu li > a:hover,
 .dashboard-menu li > button:not(:disabled):hover {
-    background-color: var(--color-base-200);
+    background-color: var(--menu-hover-bg);
+    color: var(--menu-hover-color);
 }
 
-/* 現在のページ */
-.dashboard-menu li > a[aria-current="page"],
+.dashboard-menu li > a[aria-current="page"] {
+    color: var(--menu-active-color);
+    background-color: var(--menu-active-bg);
+    font-weight: 700;
+    box-shadow: inset 3px 0 0 var(--menu-active-indicator);
+}
+
 .dashboard-menu li > a[aria-current="page"]:hover {
-    color: var(--color-primary-content);
-    background-color: var(--color-primary);
+    background-color: var(--menu-active-hover-bg);
+    color: var(--menu-active-color);
 }
 
 .dashboard-menu svg {
@@ -151,7 +241,6 @@
     cursor: not-allowed;
 }
 
-/* 文字の領域を残したままフェードさせる */
 .dashboard-menu-label {
     display: inline-block;
     flex-shrink: 0;
@@ -173,32 +262,179 @@
 
 
 /* ========================================
+   アカウント操作の共通デザイン（Navbar / Sidebar）
+   ======================================== */
+
+.dashboard-shell .navbar-account > .avatar,
+.dashboard-shell .sidebar-account-avatar > .avatar {
+    display: inline-flex;
+    flex: 0 0 var(--account-avatar-size);
+}
+
+.dashboard-shell .navbar-account > .avatar > div,
+.dashboard-shell .sidebar-account-avatar > .avatar > div {
+    width: var(--account-avatar-size);
+    height: var(--account-avatar-size);
+    border-radius: 50%;
+}
+
+.dashboard-shell .navbar-account > .avatar > div {
+    --tw-ring-offset-color: var(--navbar-bg);
+}
+
+.dashboard-shell .sidebar-account-avatar .avatar > div {
+    --tw-ring-offset-color: var(--sidebar-bg);
+}
+
+.dashboard-shell .navbar-account > .avatar img,
+.dashboard-shell .sidebar-account-avatar > .avatar img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.dashboard-shell .navbar-account form,
+.dashboard-shell .sidebar-account-form {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+
+    min-width: 0;
+    margin: 0;
+    padding: 0;
+}
+
+.dashboard-shell .navbar-logout,
+.dashboard-shell .sidebar-account-logout {
+    position: relative;
+    inset: auto;
+
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    flex: 0 0 auto;
+    gap: 8px;
+
+    width: auto;
+    min-width: var(--account-button-height);
+    height: var(--account-button-height);
+    min-height: var(--account-button-height);
+    margin: 0;
+    padding: 0 12px;
+
+    appearance: none;
+    border: 1px solid var(--logout-border);
+    border-radius: var(--account-button-radius);
+
+    color: var(--logout-color);
+    background: var(--logout-bg);
+    box-shadow: none;
+    text-shadow: none;
+
+    font: inherit;
+    font-size: 12px;
+    font-weight: 700;
+    line-height: 1;
+    letter-spacing: 0;
+    text-transform: none;
+    text-decoration: none;
+    white-space: nowrap;
+    cursor: pointer;
+
+    transform: none;
+    translate: none;
+    scale: none;
+
+    transition:
+        background-color 160ms ease,
+        border-color 160ms ease,
+        color 160ms ease,
+        box-shadow 160ms ease,
+        padding var(--sidebar-duration) var(--sidebar-easing),
+        gap var(--sidebar-duration) var(--sidebar-easing);
+}
+
+.dashboard-shell .navbar-logout:hover,
+.dashboard-shell .sidebar-account-logout:hover {
+    color: var(--logout-hover-color);
+    background: var(--logout-hover-bg);
+    border-color: var(--logout-hover-border);
+    box-shadow: var(--logout-hover-shadow);
+}
+
+.dashboard-shell .navbar-logout:active,
+.dashboard-shell .sidebar-account-logout:active {
+    color: var(--logout-hover-color);
+    background: var(--logout-pressed-bg);
+    border-color: var(--logout-hover-border);
+    box-shadow: none;
+
+    transform: none;
+    translate: none;
+    scale: none;
+}
+
+.dashboard-shell .navbar-logout svg,
+.dashboard-shell .sidebar-account-logout svg {
+    position: static;
+    order: -1;
+
+    flex: 0 0 var(--account-icon-size);
+    width: var(--account-icon-size);
+    height: var(--account-icon-size);
+
+    color: inherit;
+    transform: translateX(0);
+    pointer-events: none;
+
+    transition: transform 180ms cubic-bezier(0.2, 0, 0, 1);
+}
+
+@media (hover: hover) {
+    .dashboard-shell .navbar-logout:hover svg,
+    .dashboard-shell .sidebar-account-logout:hover svg {
+        transform: translateX(3px);
+    }
+}
+
+.dashboard-shell .navbar-logout:focus-visible svg,
+.dashboard-shell .sidebar-account-logout:focus-visible svg {
+    transform: translateX(3px);
+}
+
+
+/* ========================================
    サイドバー下部
-   Avatarとログアウトは別領域
    ======================================== */
 
 .sidebar-account {
     display: grid;
-    grid-template-columns: 44px minmax(0, 1fr);
+    grid-template-columns: var(--account-avatar-size) minmax(0, 1fr);
     align-items: center;
+    column-gap: var(--account-gap);
     flex-shrink: 0;
 
     height: 72px;
-    padding: 0 8px;
+    min-height: 72px;
+    padding: 0 12px;
 
-    border-top: 1px solid var(--color-base-300);
+    border-top: 1px solid var(--layout-border);
 
     transition:
-        grid-template-columns
-        var(--sidebar-duration)
-        var(--sidebar-easing);
+        grid-template-columns var(--sidebar-duration) var(--sidebar-easing),
+        column-gap var(--sidebar-duration) var(--sidebar-easing),
+        padding var(--sidebar-duration) var(--sidebar-easing);
 }
 
 .sidebar-account-avatar {
     display: flex;
     align-items: center;
     justify-content: center;
+
+    width: var(--account-avatar-size);
     min-width: 0;
+    overflow: visible;
 
     opacity: 1;
     visibility: visible;
@@ -208,63 +444,29 @@
         visibility 140ms ease;
 }
 
-/* Avatarが列幅に合わせて縮まないようにする */
-.sidebar-account-avatar > .avatar {
-    flex-shrink: 0;
-}
+.sidebar-account-label {
+    position: static;
+    display: inline-block;
+    flex: 0 1 auto;
 
-.sidebar-account-form {
+    max-width: 6em;
     min-width: 0;
-    margin: 0;
-}
-
-.sidebar-account-logout {
-    display: flex;
-    align-items: center;
-    justify-content: flex-end;
-    gap: 8px;
-
-    width: 100%;
-    height: 44px;
-    padding: 0 10px;
     overflow: hidden;
 
-    border: 0;
-    border-radius: 10px;
-
-    color: var(--color-base-content);
-    background-color: transparent;
-
-    font: inherit;
-    font-size: 12px;
-    white-space: nowrap;
-    cursor: pointer;
-
-    transition: background-color 160ms ease;
-}
-
-.sidebar-account-logout:hover {
-    background-color: var(--color-base-200);
-}
-
-.sidebar-account-logout svg {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-
-    color: var(--color-error);
-}
-
-.sidebar-account-label {
-    flex-shrink: 0;
     white-space: nowrap;
     opacity: 1;
+    transform: none;
 
-    transition: opacity 120ms ease;
+    transition:
+        max-width var(--sidebar-duration) var(--sidebar-easing),
+        opacity 140ms ease;
 }
 
+/* サイドバー折りたたみ時 */
 .dashboard-shell.is-collapsed .sidebar-account {
     grid-template-columns: 0 minmax(0, 1fr);
+    column-gap: 0;
+    padding-inline: 6px;
 }
 
 .dashboard-shell.is-collapsed .sidebar-account-avatar {
@@ -273,7 +475,13 @@
     pointer-events: none;
 }
 
+.dashboard-shell.is-collapsed .sidebar-account-logout {
+    gap: 0;
+    padding-inline: 13px;
+}
+
 .dashboard-shell.is-collapsed .sidebar-account-label {
+    max-width: 0;
     opacity: 0;
 }
 
@@ -283,6 +491,8 @@
    ======================================== */
 
 .dashboard-navbar {
+    position: relative;
+    z-index: 1;
     grid-column: 2;
     grid-row: 1;
 
@@ -293,8 +503,9 @@
     min-width: 0;
     padding: 0 20px;
 
-    background-color: var(--color-base-100);
-    border-bottom: 1px solid var(--color-base-300);
+    background-color: var(--navbar-bg);
+    border-bottom: 1px solid var(--layout-border);
+    box-shadow: 0 2px 6px rgb(0 0 0 / 4%);
 }
 
 .dashboard-navbar-actions {
@@ -315,27 +526,27 @@
 }
 
 .navbar-account {
-    gap: 12px;
-}
-
-.navbar-account form {
-    margin: 0;
+    gap: var(--account-gap);
 }
 
 .navbar-separator {
     width: 1px;
     height: 24px;
     flex-shrink: 0;
-
     background-color: var(--color-base-300);
 }
 
-.navbar-icon-button {
+.dashboard-shell .navbar-icon-button {
     width: 44px;
     height: 44px;
     min-height: 44px;
     flex-shrink: 0;
     padding: 0;
+    border-radius: 10px;
+
+    transition:
+        background-color 160ms ease,
+        color 160ms ease;
 }
 
 .navbar-icon-button svg {
@@ -343,26 +554,15 @@
     height: 22px;
 }
 
-.navbar-logout {
-    height: 44px;
-    min-height: 44px;
-    gap: 8px;
-    padding: 0 10px;
-
-    font-size: 12px;
-}
-
-.navbar-logout svg {
-    width: 20px;
-    height: 20px;
-    flex-shrink: 0;
-
-    color: var(--color-error);
+.dashboard-shell .navbar-icon-button:hover,
+.dashboard-shell #dashboard-menu-toggle:hover {
+    background-color: var(--menu-hover-bg);
+    color: var(--menu-hover-color);
 }
 
 
 /* ========================================
-   本文
+   本文・ページ単位のアクセント
    ======================================== */
 
 .dashboard-content {
@@ -374,36 +574,77 @@
     padding: 24px;
     overflow: auto;
 
-    background-color: var(--color-base-200);
+    background-color: var(--content-bg);
 }
+
+.foundation-page {
+    --page-accent: #6366f1;
+
+    width: 100%;
+    max-width: 1120px;
+    margin: 0 auto;
+
+    transition: opacity 120ms ease;
+}
+
+.dashboard-content[aria-busy="true"] .foundation-page {
+    opacity: 0.55;
+}
+
+.foundation-heading {
+    display: flex;
+    justify-content: space-between;
+    align-items: flex-start;
+    gap: 16px;
+    margin-bottom: 24px;
+}
+
+.foundation-panel {
+    min-height: 260px;
+    padding: 28px;
+
+    border: 1px solid var(--color-base-300);
+    border-top: 4px solid var(--page-accent);
+    border-radius: 16px;
+
+    background-color: var(--color-base-100);
+    background-image: linear-gradient(
+        color-mix(in srgb, var(--page-accent) 8%, transparent),
+        transparent
+    );
+}
+
+.foundation-home { --page-accent: #6366f1; }
+.foundation-attendance { --page-accent: #10b981; }
+.foundation-timetable { --page-accent: #0ea5e9; }
+.foundation-academic { --page-accent: #8b5cf6; }
+.foundation-grades { --page-accent: #f59e0b; }
+.foundation-career { --page-accent: #ec4899; }
+.foundation-settings { --page-accent: #64748b; }
 
 
 /* ========================================
-   キーボード操作
+   キーボード操作（フォーカスリング）
    ======================================== */
 
 .dashboard-menu a:focus-visible,
 .dashboard-menu button:focus-visible {
-    outline: 2px solid var(--color-primary);
+    outline: 2px solid var(--focus-ring-color);
     outline-offset: -2px;
 }
 
-.sidebar-account-logout:focus-visible,
-.navbar-icon-button:focus-visible,
-.navbar-logout:focus-visible {
-    outline: 2px solid var(--color-primary);
-    outline-offset: 2px;
-}
-
-/* 配色切替のチェックボックスへフォーカスした場合 */
-.navbar-icon-button:has(input:focus-visible) {
-    outline: 2px solid var(--color-primary);
+.dashboard-shell .sidebar-account-logout:focus-visible,
+.dashboard-shell .navbar-logout:focus-visible,
+.dashboard-shell .navbar-icon-button:focus-visible,
+.dashboard-shell .navbar-icon-button:has(input:focus-visible),
+.dashboard-shell #dashboard-menu-toggle:focus-visible {
+    outline: 2px solid var(--focus-ring-color);
     outline-offset: 2px;
 }
 
 
 /* ========================================
-   小さい画面
+   レスポンシブ / モーション設定
    ======================================== */
 
 @media (max-width: 639px) {
@@ -419,24 +660,24 @@
         gap: 0;
     }
 
-    .navbar-account {
-        gap: 8px;
+    .dashboard-shell .navbar-logout {
+        width: var(--account-button-height);
+        padding: 0;
+        gap: 0;
     }
 
-    .navbar-logout {
-        width: 44px;
-        padding: 0;
+    .dashboard-shell .navbar-logout > span {
+        display: none;
     }
 
     .dashboard-content {
         padding: 16px;
     }
+
+    .foundation-panel {
+        padding: 20px;
+    }
 }
-
-
-/* ========================================
-   動きを抑える設定
-   ======================================== */
 
 @media (prefers-reduced-motion: reduce) {
     .dashboard-shell,
@@ -446,7 +687,18 @@
     .sidebar-account,
     .sidebar-account-avatar,
     .sidebar-account-label,
-    .sidebar-account-logout {
+    .dashboard-shell .sidebar-account-logout,
+    .dashboard-shell .navbar-logout,
+    .dashboard-shell .navbar-logout svg,
+    .dashboard-shell .sidebar-account-logout svg,
+    .dashboard-shell .navbar-icon-button,
+    .dashboard-shell #dashboard-menu-toggle,
+    .foundation-page {
         transition: none;
+    }
+
+    .dashboard-shell .navbar-logout svg,
+    .dashboard-shell .sidebar-account-logout svg {
+        transform: none;
     }
 }

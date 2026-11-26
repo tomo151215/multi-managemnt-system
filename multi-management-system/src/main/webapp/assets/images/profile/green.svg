@@ -1,5 +1,44 @@
 <svg xmlns="http://www.w3.org/2000/svg" width="96" height="96" viewBox="0 0 96 96">
-    <rect width="96" height="96" rx="48" fill="#15803d" />
-    <circle cx="48" cy="34" r="16" fill="white" />
-    <path d="M20 82v-8a28 28 0 0 1 56 0v8" fill="white" />
+  <rect width="96" height="96" rx="16" fill="#f0fdf4" />
+  <defs>
+    
+    <g id="f-green-grid">
+      <rect x="0" y="0" width="16" height="16" fill="#15803d" />
+      <rect x="2" y="2" width="12" height="12" fill="#22c55e" />
+      <rect x="5" y="5" width="6" height="6" fill="#86efac" />
+      <rect x="7" y="7" width="2" height="2" fill="#14532d" />
+    </g>
+    <g id="f-green-tri">
+      <polygon points="8,0 16,16 0,16" fill="#16a34a" />
+      <polygon points="8,8 12,16 4,16" fill="#bbf7d0" />
+      <polygon points="8,0 12,8 4,8" fill="#4ade80" />
+    </g>
+  </defs>
+
+  
+  <g transform="translate(8, 8)">
+    
+    <use href="#f-green-tri" x="0" y="0" />
+    <use href="#f-green-tri" x="64" y="0" />
+    <rect x="0" y="32" width="16" height="16" fill="#22c55e" />
+    <rect x="64" y="32" width="16" height="16" fill="#22c55e" />
+    <use href="#f-green-grid" x="0" y="48" />
+    <use href="#f-green-grid" x="64" y="48" />
+
+    
+    <rect x="16" y="0" width="16" height="16" fill="#4ade80" />
+    <rect x="48" y="0" width="16" height="16" fill="#4ade80" />
+    <use href="#f-green-grid" x="16" y="16" />
+    <use href="#f-green-grid" x="48" y="16" />
+    <use href="#f-green-tri" x="16" y="32" />
+    <use href="#f-green-tri" x="48" y="32" />
+    <rect x="16" y="64" width="16" height="16" fill="#15803d" />
+    <rect x="48" y="64" width="16" height="16" fill="#15803d" />
+
+    
+    <rect x="32" y="16" width="16" height="16" fill="#86efac" />
+    <use href="#f-green-grid" x="32" y="32" />
+    <rect x="32" y="48" width="16" height="16" fill="#16a34a" />
+    <use href="#f-green-tri" x="32" y="64" />
+  </g>
 </svg>

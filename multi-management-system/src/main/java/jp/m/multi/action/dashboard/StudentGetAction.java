@@ -1,13 +1,12 @@
 package jp.m.multi.action.dashboard;
 
+import java.io.IOException;
 import jakarta.servlet.ServletException;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
-import java.io.IOException;
 import jp.m.multi.action.Action;
 import jp.m.multi.action.AccessLevel;
-import jp.m.multi.security.CsrfTokens;
-import jp.m.multi.util.Web;
+import jp.m.multi.util.PageView;
 
 public class StudentGetAction extends Action {
     @Override
@@ -18,7 +17,8 @@ public class StudentGetAction extends Action {
     @Override
     public void execute(HttpServletRequest request, HttpServletResponse response)
             throws ServletException, IOException {
-        CsrfTokens.ensure(request.getSession());
-        Web.view(request, response, "dashboard/student");
+        // TODO 実機能：入力検査 → AppContextからService取得 → 表示用DTOをrequestへ設定。
+        // SQL・業務判定をJSPへ書かない。表示できる対象はServiceでも確認する。
+        PageView.render(request, response, "生徒ホーム", "home", "dashboard/student");
     }
 }
