@@ -24,6 +24,9 @@
 hs_err_pid*
 replay_pid*
 
+# ビルドで生成するCSS
+/multi-management-system/src/main/webapp/assets/css/app.css
+
 # ==========================================
 # Maven
 # ==========================================
